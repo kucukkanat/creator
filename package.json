@@ -1,0 +1,16 @@
+{
+  "name": "@kucukkanat/creator",
+  "version": "1.0.0",
+  "description": "This is a CLOI to easily create a monorepo to build web components apps",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/bun": "^1.1.13",
+    "@types/deno": "^2.0.0"
+  }
+}
