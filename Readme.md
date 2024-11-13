@@ -1,6 +1,6 @@
 # Project Creator
 
-This is a CLOI to easily create a monorepo to build web components apps
+This is a CLI to easily create a monorepo to build web components apps
 
 ## Tech stack
 
@@ -12,3 +12,13 @@ This is a CLOI to easily create a monorepo to build web components apps
 - Vite for bundling
 - Storybook for isolated component development
 - Mobx for state management
+
+## Commands
+
+```shell
+# Creates a new project
+creator create --name myproject --root . --useBun
+
+# Creates a new web component with Lit @kucukkanat/mycomponent npm package
+creator component --name mycomponent --scope kucukkanat --lightDOM
+```
