@@ -1,0 +1,61 @@
+name: creator
+help: Frontend monorepo creator
+version: 0.1.0
+
+environment_variables:
+  - name: api_key
+    help: Set your API key
+
+commands:
+  - name: create
+    alias: C
+    help: Create a new Project
+    args:
+      - name: name
+        required: true
+        help: Name of the project
+    flags:
+      - &USEBUN
+        arg: useBun
+        long: --useBun
+        short: -b
+        help: Use bun instead of npm
+        default: ""
+      - arg: root
+        long: --root
+        short: -r
+        help: Root directory of the project
+        default: "."
+  - name: component
+    help: Create a component
+    commands:
+      - name: create
+        alias: c
+        help: Create a new Component
+        args:
+          - name: name
+            required: true
+            help: Name of the component
+        flags:
+          - arg: lightDOM
+            long: --lightDOM
+            short: -l
+            help: Component uses light DOM
+            default: "yes"
+  - name: package
+    help: Create a package
+    commands:
+      - name: create
+        alias: c
+        help: Create a new Package
+        args:
+          - name: name
+            required: true
+            help: Name of the package
+        flags:
+          - arg: dependencies
+            long: --dep
+            short: -d
+            help: Dependencies to add after creation
+            repeatable: true
+          - *USEBUN
