@@ -1,36 +1,55 @@
-import { $, cd, path } from "https://deno.land/x/dzx@0.4.0/mod.ts";
+import process from "node:process";
 import { default as CreatePackage } from "./package.ts";
-export default async function (options: any, name: string) {
-    console.log("Creating a component with options", options);
+import { AlterPackageJSON, FileTemplate, InitWithVite } from "#/utils.ts";
+import { execSync } from "node:child_process";
+const validate = {
+  name: (name: string) => {
     if (!name.includes("-")) {
-        console.log("Component names should be kebab-case");
-        Deno.exit(1);
+      console.log("Component names should be kebab-case");
+      Deno.exit(1);
     }
-    await CreatePackage({ ...options, deps: ["lit"] }, name);
+  },
+};
+export default function (options: any, name: string) {
+  console.log("Creating a component with options", options);
+  validate.name(name);
 
-    // Overwrite the index.ts file
-    await Deno.writeFile(
-        path.join("src", "index.ts"),
-        new TextEncoder().encode(template(name, options.light)),
-    );
-}
+  InitWithVite({
+    name,
+    template: options.template,
+    useBun: options.useBun,
+  });
 
-function template(name: string, useLightDOM: boolean): string {
-    return `import { LitElement, html } from 'lit';
+  Deno.chdir(name);
+  // Remove vite generated redundant files
+  execSync(
+    `rm -rf src/{index.css,my-element.ts,vite-env.d.ts} src/assets public`,
+  );
+
+  // Overwrite the index.ts file
+  new FileTemplate<{ name: string; light: boolean }>(
+    `src/index.ts`,
+    ({ name, light }) =>
+      /*ts*/ `import { LitElement, html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 
 @customElement('${name}')
 export class Component extends LitElement {
     ${
-        useLightDOM
-            ? `createRenderRoot(): HTMLElement | DocumentFragment  {
+        light
+          ? `createRenderRoot(): HTMLElement | DocumentFragment  {
         return this;
     }`
-            : ""
-    }
+          : ""
+      }
     render() {
         return html\`<h1>${name}</h1>\`;
     }
 }
-    `;
+    `,
+  ).write({ name, light: options.light });
+
+  AlterPackageJSON({
+    name: options.scope ? `@${options.scope}/${name}` : name,
+  });
 }

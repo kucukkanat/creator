@@ -8,17 +8,18 @@
             "request": "launch",
             "name": "Launch Program",
             "type": "node",
-            "program": "src/cliffy.ts",
-            "cwd": "${workspaceFolder}/creator",
+            "cwd": "${workspaceFolder}",
             "env": {},
             "runtimeExecutable": "/Users/htolgasahin/.deno/bin/deno",
             "runtimeArgs": [
                 "run",
+                "--unstable",
                 "--inspect-wait",
                 "--allow-all",
+                "src/main.ts",
                 "create",
-                "component",
-                "tolga"
+                "project",
+                ".#my-project"
             ],
             "attachSimplePort": 9229
         }
