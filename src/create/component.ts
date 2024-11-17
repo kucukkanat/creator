@@ -23,7 +23,7 @@ export default function (options: any, name: string) {
   Deno.chdir(name);
   // Remove vite generated redundant files
   execSync(
-    `rm -rf src/{index.css,my-element.ts,vite-env.d.ts} src/assets public`,
+    `rm -rf src/{index.css,my-element.ts,vite-env.d.ts,index.html} src/assets public`,
   );
 
   // Overwrite the index.ts file

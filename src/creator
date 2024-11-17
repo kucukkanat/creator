@@ -1,0 +1,4 @@
+#!/usr/bin/env zsh
+echo -e "\033[31mWARNING!\033[0m"
+echo "This is a convenience binary to run while developing the creator module, do not use this!"
+deno run -A main.ts $@
